@@ -115,6 +115,21 @@ img {
   display: block;
 }
 
+/* JS image loading transition (using keyframe animation to avoid GSAP conflict) */
+html.js img {
+  opacity: 0;
+  will-change: opacity;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+html.js img.loaded {
+  animation: fadeIn var(--duration-normal) var(--ease-luxury) forwards;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -199,7 +214,9 @@ h3 {
   right: 0;
   z-index: 1000;
   padding: 1.5rem var(--page-margin);
-  transition: all var(--duration-normal) var(--ease-luxury);
+  transition: background var(--duration-normal) var(--ease-luxury),
+              padding var(--duration-normal) var(--ease-luxury),
+              border-color var(--duration-normal) var(--ease-luxury);
   background: transparent;
 }
 
@@ -298,7 +315,10 @@ h3 {
   border: 1px solid var(--color-accent-gold);
   border-radius: 0;
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-luxury);
+  transition: background-color var(--duration-fast) var(--ease-luxury),
+              border-color var(--duration-fast) var(--ease-luxury),
+              color var(--duration-fast) var(--ease-luxury),
+              transform var(--duration-fast) var(--ease-luxury);
   display: inline-block;
   text-align: center;
   position: relative;
@@ -358,28 +378,29 @@ h3 {
   cursor: pointer;
   background: none;
   border: none;
-  padding: 0.5rem;
+  padding: 0.8rem;
   z-index: 1100;
+  margin-right: -0.8rem;
 }
 
 .hamburger span {
   display: block;
   width: 28px;
-  height: 1.5px;
+  height: 2px;
   background: var(--color-text-primary);
-  transition: all var(--duration-fast) var(--ease-luxury);
+  transition: transform var(--duration-fast) var(--ease-luxury), opacity var(--duration-fast) var(--ease-luxury);
   transform-origin: center;
 }
 
 .hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: translateY(8px) rotate(45deg);
 }
 .hamburger.active span:nth-child(2) {
   opacity: 0;
   transform: scaleX(0);
 }
 .hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 /* Navigation overlay */
@@ -555,10 +576,10 @@ h3 {
    ============================================================ */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
-  align-items: flex-end;
-  padding: 0 var(--page-margin) var(--space-3xl);
+  align-items: center;
+  padding: 100px var(--page-margin) var(--space-xl);
   overflow: hidden;
 }
 
@@ -678,7 +699,7 @@ h3 {
    ============================================================ */
 .info-section {
   background: var(--color-bg-primary);
-  padding: var(--space-3xl) var(--page-margin);
+  padding: var(--space-xl) var(--page-margin);
 }
 
 .info-section .section-header {
@@ -692,7 +713,7 @@ h3 {
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
+  gap: 1.5rem;
 }
 
 .info-card {
@@ -700,8 +721,10 @@ h3 {
   text-align: center;
   padding: var(--space-2xl) var(--space-lg);
   background: rgba(var(--color-bg-secondary-rgb), 0.3);
-  border: 1px solid var(--color-border-subtle);
-  transition: all var(--duration-normal) var(--ease-luxury);
+  border-radius: var(--border-radius-lg);
+  transition: background var(--duration-normal) var(--ease-luxury),
+              box-shadow var(--duration-normal) var(--ease-luxury),
+              transform var(--duration-normal) var(--ease-luxury);
   overflow: hidden;
 }
 
@@ -725,8 +748,9 @@ h3 {
 }
 
 .info-card:hover {
-  border-color: var(--color-border-gold);
-  background: rgba(var(--color-bg-secondary-rgb), 0.5);
+  background: rgba(var(--color-bg-secondary-rgb), 0.55);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
 .info-card-icon {
@@ -765,8 +789,7 @@ h3 {
    ============================================================ */
 .food-gallery {
   background: var(--color-bg-primary);
-  padding: var(--space-3xl) var(--page-margin);
-  border-top: 1px solid var(--color-border-subtle);
+  padding: var(--space-xl) var(--page-margin);
 }
 
 .food-gallery .section-header {
@@ -833,8 +856,7 @@ h3 {
    ============================================================ */
 .promo-section {
   background: var(--color-bg-primary);
-  padding: var(--space-3xl) var(--page-margin);
-  border-top: 1px solid var(--color-border-subtle);
+  padding: var(--space-xl) var(--page-margin);
 }
 
 .promo-section .section-header {
@@ -858,12 +880,12 @@ h3 {
 .promo-card {
   overflow: hidden;
   position: relative;
-  border: 1px solid var(--color-border-subtle);
-  transition: all var(--duration-normal) var(--ease-luxury);
+  border-radius: var(--border-radius-lg);
+  transition: transform var(--duration-normal) var(--ease-luxury),
+              box-shadow var(--duration-normal) var(--ease-luxury);
 }
 
 .promo-card:hover {
-  border-color: var(--color-border-gold);
   transform: translateY(-4px);
   box-shadow: var(--shadow-gold);
 }
@@ -885,8 +907,6 @@ h3 {
 .marquee-section {
   padding: var(--space-lg) 0;
   overflow: hidden;
-  border-top: 1px solid var(--color-border-subtle);
-  border-bottom: 1px solid var(--color-border-subtle);
   background: var(--color-bg-primary);
 }
 
@@ -934,7 +954,6 @@ h3 {
 .site-footer {
   background: var(--color-bg-primary);
   padding: var(--space-3xl) var(--page-margin) var(--space-xl);
-  border-top: 1px solid var(--color-border-subtle);
 }
 
 .footer-inner {
@@ -985,13 +1004,16 @@ h3 {
   justify-content: center;
   width: 42px;
   height: 42px;
-  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--border-radius);
+  background: rgba(var(--color-bg-secondary-rgb), 0.3);
   color: var(--color-text-muted);
-  transition: all var(--duration-fast) var(--ease-luxury);
+  transition: background var(--duration-fast) var(--ease-luxury),
+              color var(--duration-fast) var(--ease-luxury),
+              transform var(--duration-fast) var(--ease-luxury);
 }
 
 .social-links a:hover {
-  border-color: var(--color-accent-gold);
+  background: rgba(var(--color-accent-gold-rgb), 0.15);
   color: var(--color-accent-gold);
   transform: translateY(-2px);
 }
@@ -1036,7 +1058,6 @@ h3 {
   max-width: var(--max-width);
   margin: var(--space-2xl) auto 0;
   padding-top: var(--space-lg);
-  border-top: 1px solid var(--color-border-subtle);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1078,7 +1099,8 @@ h3 {
 .menu-image-section img {
   max-width: 900px;
   width: 100%;
-  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
 }
 
 .menu-cta-section {

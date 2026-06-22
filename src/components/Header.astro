@@ -1,0 +1,39 @@
+---
+const { pathname } = Astro.url;
+// Normalise pathname to remove trailing slash
+const currentPath = pathname.replace(/\/$/, "");
+
+const links = [
+  { href: "/menu", label: "Menu" },
+  { href: "/location", label: "Location" },
+  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "About" }
+];
+---
+
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo" aria-label="Carol's Restaurant Home">
+      <img src="/images/carols-logo.png" alt="Carol's Restaurant Logo">
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav" id="main-nav">
+      <ul class="nav-links">
+        {links.map(({ href, label }) => {
+          const isActive = currentPath === href || (href === "/" && currentPath === "");
+          return (
+            <li>
+              <a href={href} class={isActive ? "active" : ""}>{label}</a>
+            </li>
+          );
+        })}
+      </ul>
+      <div class="nav-cta-mobile">
+        <a href="tel:+16122511573" class="cta-btn" id="cta-call-now">Call to Order</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<div class="nav-overlay" id="nav-overlay"></div>
